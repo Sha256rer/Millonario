@@ -48,7 +48,7 @@ public class Pregunta extends JDialog {
 	private JButton button3;
 	private JButton button4;
 	private JButton btnNewButton;
-
+	private boolean enabled = true;
 
 
 	/**
@@ -89,14 +89,16 @@ public class Pregunta extends JDialog {
 		btn4.setEnabled(false);
 		buttonGroup.add(btn4);
 		
-		button1 = new JButton("un textaco para testear que los botones funcionan");
+		button1 = new JButton("");
 		
 		button1.setForeground(new Color(255, 255, 255));
 		button1.setIcon(new ImageIcon(Pregunta.class.getResource("/ventana/resources/pregunta3.png")));
 		button1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(enabled) {
 				Changebutton(button1);
 				btn1.setSelected(true);
+				}
 			}
 		});
 		button1.setBounds(55, 62, 300, 88);
@@ -106,8 +108,10 @@ public class Pregunta extends JDialog {
 		button2.setForeground(new Color(255, 255, 255));
 		button2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(enabled) {
 				Changebutton(button2);
 				btn2.setSelected(true);
+				}
 			}
 		});
 		button2.setIcon(new ImageIcon(Pregunta.class.getResource("/ventana/resources/pregunta3.png")));
@@ -119,8 +123,11 @@ public class Pregunta extends JDialog {
 		button3.setIcon(new ImageIcon(Pregunta.class.getResource("/ventana/resources/pregunta3.png")));
 		button3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Changebutton(button3);
-				btn3.setSelected(true);
+				if(enabled) {
+					Changebutton(button3);
+					btn3.setSelected(true);
+				}
+				
 			}
 		});
 		button3.setBounds(37, 290, 340, 57);
@@ -130,8 +137,11 @@ public class Pregunta extends JDialog {
 		button4.setForeground(new Color(255, 255, 255));
 		button4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Changebutton(button4);
-				btn4.setSelected(true);
+				if(enabled) {
+					Changebutton(button4);
+					btn4.setSelected(true);
+				}
+			
 			}
 		});
 		button4.setIcon(new ImageIcon(Pregunta.class.getResource("/ventana/resources/pregunta3.png")));
@@ -162,6 +172,8 @@ public class Pregunta extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				checkRight();
 				btnNewButton.setEnabled(false);
+				enabled = false;
+				
 			}
 		});
 		btnNewButton.setBounds(301, 418, 205, 32);

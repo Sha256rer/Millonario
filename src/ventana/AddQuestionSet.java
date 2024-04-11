@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -56,7 +57,7 @@ public class AddQuestionSet extends JFrame {
 	 * Create the frame.
 	 */
 	public AddQuestionSet() {
-		contador = -1;
+		contador = 0;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -110,8 +111,13 @@ public class AddQuestionSet extends JFrame {
 		btn1 = new JButton("Back");
 		btn1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(contador>0) {
 				GetPrev();
 				contador--;
+				}
+				else {
+				JOptionPane.showMessageDialog(btn1, "No puedes ir mas atras");
+				}
 			}
 		});
 		btn1.setBounds(206, 227, 89, 23);
@@ -163,38 +169,56 @@ public class AddQuestionSet extends JFrame {
 	
 	private void NextWindow() {
 		if(checkSelected()==0) {
-			errores.setText("No correcta");
+			JOptionPane.showMessageDialog(btn2, "No marcaste una opcion correcta");
 			throw new Error("No correcta");
 		}
 		if(textField.getText().isBlank()) {
-			errores.setText("Textr vacio");
+			JOptionPane.showMessageDialog(btn2, "Texto vacio");
 			throw new Error("TextF vacio");
 		}
 		if(textField_1.getText().isBlank()) {
+			JOptionPane.showMessageDialog(btn2, "Texto vacio");
 			throw new Error("TextF vacio");
 		}
 		if(textField_2.getText().isBlank()) {
+			JOptionPane.showMessageDialog(btn2, "Texto vacio");
 			throw new Error("TextF vacio");
 		}
 		if(textField_3.getText().isBlank()) {
+			JOptionPane.showMessageDialog(btn2, "Texto vacio");
 			throw new Error("TextF vacio");
 		}
 		if(txtpreg.getText().isBlank()) {
+			JOptionPane.showMessageDialog(btn2, "Texto vacio");
 			throw new Error("TextF vacio");
 		}
 		if(q==null) {
 			this.q = new ListaPreguntas();
 		}
 		String[] respuestas = {textField.getText(), textField_1.getText(), textField_2.getText(), textField_3.getText()};
-		q.addPreg(new PreguntaC(txtpreg.getText(), respuestas ,checkSelected()));
-		textField.setText(null);
-		textField_1.setText(null);
-		textField_2.setText(null);
-		textField_3.setText(null);
-		txtpreg.setText(null);
-		getSelected().setSelected(false);
-		System.out.println(contador);
-	}
+		try {
+			q.getPregunta(contador+1);
+			q.getPregunta(contador).setRespuestas(respuestas);
+			q.getPregunta(contador).setPregunta(txtpreg.getText());
+			q.getPregunta(contador).setCorrecta(checkSelected());
+			txtpreg.setText(q.getPregunta(contador+1).getPregunta());
+			setSelected(q.getPregunta(contador+1));
+			TextFieldSetter(q.getPregunta(contador+1));
+		}
+		catch(IndexOutOfBoundsException e) {
+			q.addPreg(new PreguntaC(txtpreg.getText(), respuestas ,checkSelected()));
+			TextFieldSetter();
+			getSelected().setSelected(false);
+			System.out.println(contador);
+			
+		}
+			
+			
+		}
+		
+	
+		
+	
 	private int checkSelected() {
 		
 		for(Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
@@ -231,22 +255,29 @@ public class AddQuestionSet extends JFrame {
 		}
 	}
 	private void GetPrev() {
-		
-		textField.setText(null);
-		textField_1.setText(null);
-		textField_2.setText(null);
-		textField_3.setText(null);
-		txtpreg.setText(null);
+	
+		TextFieldSetter();
 		getSelected().setSelected(false);
 		if(contador<0) {
 			throw new Error("No hay mas atras");
 		}
-		PreguntaC curr =  q.getPregunta(contador);
-		txtpreg.setText(curr.getPregunta());
-		textField.setText(curr.getRespuesta(0));
-		textField_1.setText(curr.getRespuesta(1));
-		textField_2.setText(curr.getRespuesta(2));
-		textField_3.setText(curr.getRespuesta(3));
+		PreguntaC curr =  q.getPregunta(contador-1);
+		
+		TextFieldSetter(curr);
 		setSelected(curr);
+	}
+	private void TextFieldSetter() {
+		txtpreg.setText(null);
+		textField.setText(null);
+		textField_1.setText(null);
+		textField_2.setText(null);
+		textField_3.setText(null);
+	}
+	private void TextFieldSetter(PreguntaC c) {
+		txtpreg.setText(c.getPregunta());
+		textField.setText(c.getRespuesta(0));
+		textField_1.setText(c.getRespuesta(1));
+		textField_2.setText(c.getRespuesta(2));
+		textField_3.setText(c.getRespuesta(3));
 	}
 }
