@@ -62,19 +62,32 @@ public class MainW extends JFrame {
 		button1.setContentAreaFilled(false);
 		button1.setFocusPainted(false);
 		button1.setBorderPainted(false);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(131)
-					.addComponent(button1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(button1, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
 					.addGap(108))
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnNewButton)
+					.addContainerGap(312, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addGap(202)
-					.addComponent(button1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(89)
+					.addComponent(btnNewButton)
+					.addGap(90)
+					.addComponent(button1, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
 					.addGap(36))
 		);
 		contentPane.setLayout(gl_contentPane);
@@ -85,5 +98,5 @@ public class MainW extends JFrame {
 		Pregunta p = new Pregunta(this, true, preg);
 		p.setVisible(true);
 	}
-
+	
 }

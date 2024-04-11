@@ -27,6 +27,9 @@ public class PreguntaC {
 	public String[] getRespuestas() {
 		return respuestas;
 	}
+	public String getRespuesta(int i) {
+		return respuestas[i];
+	}
 	public void setRespuestas(String[] respuestas) {
 		this.respuestas = respuestas;
 	}
