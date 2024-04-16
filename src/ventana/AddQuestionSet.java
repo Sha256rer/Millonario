@@ -10,15 +10,20 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import java.awt.Label;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
-public class AddQuestionSet extends JFrame {
+public class AddQuestionSet extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -37,28 +42,19 @@ public class AddQuestionSet extends JFrame {
 	private JRadioButton btn4;
 	private JRadioButton btn5;
 	private JRadioButton btn6;
+	private ProcesadorPreguntas proc;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddQuestionSet frame = new AddQuestionSet();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
-	public AddQuestionSet() {
+	public AddQuestionSet(JFrame parent,boolean b) {
+		super(parent, b);
 		contador = 0;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -127,8 +123,15 @@ public class AddQuestionSet extends JFrame {
 		btn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NextWindow();
-				contador++;
+				if(contador>3) {
+					proc = new ProcesadorPreguntas();
+					proc.EscribirArchivo(q);
+					CerrarVentana();
+				}
+			
 			}
+
+		
 		});
 		btn2.setBounds(324, 227, 89, 23);
 		contentPane.add(btn2);
@@ -191,6 +194,7 @@ public class AddQuestionSet extends JFrame {
 		if(txtpreg.getText().isBlank()) {
 			JOptionPane.showMessageDialog(btn2, "Texto vacio");
 			throw new Error("TextF vacio");
+
 		}
 		if(q==null) {
 			this.q = new ListaPreguntas();
@@ -204,11 +208,16 @@ public class AddQuestionSet extends JFrame {
 			txtpreg.setText(q.getPregunta(contador+1).getPregunta());
 			setSelected(q.getPregunta(contador+1));
 			TextFieldSetter(q.getPregunta(contador+1));
+			contador++;
 		}
 		catch(IndexOutOfBoundsException e) {
 			q.addPreg(new PreguntaC(txtpreg.getText(), respuestas ,checkSelected()));
 			TextFieldSetter();
 			getSelected().setSelected(false);
+			contador++;
+			if(contador>2) {
+				btn2.setText("End");
+			}
 			System.out.println(contador);
 			
 		}
@@ -279,5 +288,9 @@ public class AddQuestionSet extends JFrame {
 		textField_1.setText(c.getRespuesta(1));
 		textField_2.setText(c.getRespuesta(2));
 		textField_3.setText(c.getRespuesta(3));
+	}
+	private void CerrarVentana() {
+		this.dispose();
+		
 	}
 }

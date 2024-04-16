@@ -58,6 +58,10 @@ public class Pregunta extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * 
+	 * Para el futuro: arreglar para cambiar la puta fumada esta
+	 * por toggle buttons y quiter la mierda de radio buttons q
+	 * he montado con los buttons
 	 */
 	public Pregunta(JFrame f, boolean l, PreguntaC p) {
 		super(f, l);

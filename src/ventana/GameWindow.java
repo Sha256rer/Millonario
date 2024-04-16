@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
-public class MainW extends JFrame {
+public class GameWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -28,7 +28,7 @@ public class MainW extends JFrame {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					MainW frame = new MainW();
+					GameWindow frame = new GameWindow();
 					frame.setVisible(true);
 					
 				} catch (Exception e) {
@@ -41,7 +41,7 @@ public class MainW extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainW() {
+	public GameWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(600, 600, 437, 317);
 		contentPane = new JPanel();
@@ -62,31 +62,18 @@ public class MainW extends JFrame {
 		button1.setContentAreaFilled(false);
 		button1.setFocusPainted(false);
 		button1.setBorderPainted(false);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(131)
 					.addComponent(button1, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
 					.addGap(108))
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnNewButton)
-					.addContainerGap(312, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(89)
-					.addComponent(btnNewButton)
-					.addGap(90)
+					.addGap(202)
 					.addComponent(button1, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
 					.addGap(36))
 		);
